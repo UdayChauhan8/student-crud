@@ -18,6 +18,7 @@ class Student extends Model
      * This allows: Student::create($validatedData)
      */
     protected $fillable = [
+        'roll_number',
         'name',
         'email',
         'course',

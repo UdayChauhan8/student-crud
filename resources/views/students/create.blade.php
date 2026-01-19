@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit Student</title>
+    <title>Create Student</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
         html.dark body { background-color: #0b1220; }
@@ -19,15 +19,14 @@
         html.dark .text-red-700 { color: #fca5a5 !important; }
         html.dark .text-red-800 { color: #fecaca !important; }
         html.dark .dropdown-item:hover { background-color: #1f2937 !important; }
-        .dropdown-item:hover { background-color: #f3f4f6; }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <div class="max-w-3xl mx-auto p-4 sm:p-6">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900">Edit Student</h1>
-                <p class="text-gray-600">Update an existing student record</p>
+                <h1 class="text-3xl font-bold text-gray-900">Create Student</h1>
+                <p class="text-gray-600">Add a new student record</p>
             </div>
 
             <div class="flex flex-wrap items-center gap-3">
@@ -48,29 +47,34 @@
         @endif
 
         <div class="bg-white shadow rounded p-6">
-            <form action="{{ route('students.update', $student) }}" method="POST" class="space-y-4">
+            <form action="{{ route('students.store') }}" method="POST" class="space-y-4">
                 @csrf
-                @method('PUT')
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Roll No</label>
+                    <input type="number" name="roll_number" min="1" value="{{ old('roll_number', $nextRollNumber ?? 1) }}"
+                           class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700">Name</label>
-                    <input type="text" name="name" value="{{ old('name', $student->name) }}"
+                    <input type="text" name="name" value="{{ old('name') }}"
                            class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700">Email</label>
-                    <input type="email" name="email" value="{{ old('email', $student->email) }}"
+                    <input type="email" name="email" value="{{ old('email') }}"
                            class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700">Course</label>
                     <div class="relative mt-1">
-                        <input type="text" id="course_search" autocomplete="off" value="{{ old('course', $student->course) }}"
+                        <input type="text" id="course_search" autocomplete="off" value="{{ old('course') }}"
                                class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
                                placeholder="Search and select a course">
-                        <input type="hidden" name="course" id="course_value" value="{{ old('course', $student->course) }}">
+                        <input type="hidden" name="course" id="course_value" value="{{ old('course') }}">
 
                         <div id="course_dropdown" class="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded shadow hidden max-h-56 overflow-auto"></div>
                     </div>
@@ -78,7 +82,7 @@
                 </div>
 
                 <div class="flex flex-wrap items-center gap-3">
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded">Update</button>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded">Save</button>
                     <a href="{{ route('students.index') }}" class="text-gray-700 hover:underline">Cancel</a>
                 </div>
             </form>

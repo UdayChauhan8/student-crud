@@ -15,7 +15,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::orderBy('id')->get();
+        $students = Student::orderBy('roll_number')->orderBy('id')->get();
 
         return view('students.index', compact('students'));
     }
@@ -25,7 +25,10 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('students.create');
+        $maxRoll = (int) (Student::max('roll_number') ?? 0);
+        $nextRollNumber = $maxRoll + 1;
+
+        return view('students.create', compact('nextRollNumber'));
     }
 
     /**
@@ -39,8 +42,15 @@ class StudentController extends Controller
         $courses = config('courses.list');
 
         $validated = $request->validate([
+            'roll_number' => ['required', 'integer', 'min:1', 'unique:students,roll_number'],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:students,email'],
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                'regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/',
+                'unique:students,email',
+            ],
             'course' => ['required', 'string', Rule::in($courses)],
         ]);
 
@@ -67,11 +77,18 @@ class StudentController extends Controller
         $courses = config('courses.list');
 
         $validated = $request->validate([
+            'roll_number' => [
+                'required',
+                'integer',
+                'min:1',
+                Rule::unique('students', 'roll_number')->ignore($student->id),
+            ],
             'name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'email',
                 'max:255',
+                'regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/',
                 Rule::unique('students', 'email')->ignore($student->id),
             ],
             'course' => ['required', 'string', Rule::in($courses)],

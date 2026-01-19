@@ -52,8 +52,7 @@
                 <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">S.No</th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Roll No</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Name</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Course</th>
@@ -63,8 +62,7 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($students as $student)
                         <tr>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $loop->iteration }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $student->id }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $student->roll_number }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $student->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $student->email }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $student->course }}</td>
@@ -84,7 +82,7 @@
 
                     @if ($students->count() === 0)
                         <tr>
-                            <td colspan="6" class="px-6 py-10 text-center text-gray-500">
+                            <td colspan="5" class="px-6 py-10 text-center text-gray-500">
                                 No students found. Click "Create Student" to add your first record.
                             </td>
                         </tr>

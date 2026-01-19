@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('roll_number')->unique();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('course');
